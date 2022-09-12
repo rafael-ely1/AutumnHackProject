@@ -20,7 +20,17 @@
       question();
       document.getElementById("startButton").disabled = true;
       let displayTime = document.getElementById('displayTime');
-
+      let operatorText = document.getElementById('operator');
+      let btn1 = document.getElementById('button1');
+      let btn2 = document.getElementById('button2');
+      let btn3 = document.getElementById('button3');
+      let btn4 = document.getElementById('button4');
+      displayTime.hidden = false;
+      operatorText.hidden = false;
+      btn1.hidden = false;
+      btn2.hidden = false;
+      btn3.hidden = false;
+      btn4.hidden = false;
       timer = setInterval(function () {
         timeLeft -= 1;
         displayTime.innerHTML = "Time: " + timeLeft + "s";
@@ -39,7 +49,7 @@
       let firstNumber = Math.ceil(Math.random() * 29);
       let secondNumber = Math.ceil(Math.random() * 29);
       correctAnswer = firstNumber % secondNumber;
-      divOperation.innerHTML = firstNumber + "%" + secondNumber;
+      divOperation.innerHTML = firstNumber + " % " + secondNumber;
 
       let wrongAnswerOne = Math.ceil(Math.random() * 29) % Math.ceil(Math.random() * 29);
       let wrongAnswerTwo = Math.ceil(Math.random() * 29) % Math.ceil(Math.random() * 29);
@@ -83,26 +93,29 @@
       <h1>The Speed Modulo Game</h1>
       <p1>This is an educational arithmetic game. Your goal is to get as many correct responses as possible from these
         modulo questions. Your goal is to try to keep on beating your high score! The game is all about accuracy. If you
-        get a question wrong then the score is reset to 0 points.
+        get a question wrong then the score is reset to 0 points. Refresh page to start another game.
       </p1>
       <br></br>
       <p1>How the modulo operation("mod" or "%" in programming) works is that it is the remainder when dividing. For
-        example, “7 mod 3 = 2” which means 1 is the remainder when you divide 7 by 3.</p1>
+        example, “7 % 3 = 2” which means 1 is the remainder when you divide 7 by 3.</p1>
     </div>
   </div>
-  <div id="currentScore">Current Score: 0 Points</div>
 
-  <div id="highScore">High Score: 0 Points</div>
-  <button id="startButton" onclick="start()">START</button>
-  <div id="displayTime">Time: 60s</div>
-  <br></br>
-  <div class="op" id="operator">? % ?</div>
-  <br></br>
-  <button onclick="checkAns(1)" id="button1">?</button>
-  <button onclick="checkAns(2)" id="button2">?</button>
-  <br></br>
-  <button onclick="checkAns(3)" id="button3">?</button>
-  <button onclick="checkAns(4)" id="button4">?</button>
+  <div class="grid-container">
+    <div id="currentScore">Current Score: 0 Points</div>
+    <button id="startButton" onclick="start()">START</button>
+    <div id="highScore">High Score: 0 Points</div>
+    <div id="displayTime" hidden>Time: 60s</div>
+    <div class="op" id="operator" hidden>? % ?</div>
+
+    <br></br>
+    <button onclick="checkAns(1)" id="button1" hidden>?</button>
+
+    <button onclick="checkAns(2)" id="button2" hidden>?</button>
+    <br></br>
+    <button onclick="checkAns(3)" id="button3" hidden>?</button>
+    <button onclick="checkAns(4)" id="button4" hidden>?</button>
+  </div>
 </head>
 
 </html>
