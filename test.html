@@ -1,0 +1,108 @@
+<html>
+
+<head>
+  <script>
+    let timeLeft = 60;
+    let highScore = 0;
+    let score = 0;
+    let correctAnswer = 0;
+    let timer;
+
+    window.onload = function () {
+      let scoreBrowser = localStorage.getItem("highScore");
+      if (scoreBrowser != undefined) {
+        highScore = scoreBrowser;
+      }
+      document.getElementById("highScore").innerHTML = "High Score: " + highScore + " Points";
+    }
+
+    function start() {
+      question();
+      document.getElementById("startButton").disabled = true;
+      let displayTime = document.getElementById('displayTime');
+
+      timer = setInterval(function () {
+        timeLeft -= 1;
+        displayTime.innerHTML = "Time: " + timeLeft + "s";
+        if (timeLeft == 0) {
+          clearInterval(timer);
+          document.getElementById("button1").disabled = true;
+          document.getElementById("button2").disabled = true;
+          document.getElementById("button3").disabled = true;
+          document.getElementById("button4").disabled = true;
+        }
+      }, 1000)
+    }
+
+    function question() {
+      let divOperation = document.getElementById("operator");
+      let firstNumber = Math.ceil(Math.random() * 29);
+      let secondNumber = Math.ceil(Math.random() * 29);
+      correctAnswer = firstNumber % secondNumber;
+      divOperation.innerHTML = firstNumber + "%" + secondNumber;
+
+      let wrongAnswerOne = Math.ceil(Math.random() * 29) % Math.ceil(Math.random() * 29);
+      let wrongAnswerTwo = Math.ceil(Math.random() * 29) % Math.ceil(Math.random() * 29);
+      let wrongAnswerThree = Math.ceil(Math.random() * 29) % Math.ceil(Math.random() * 29);
+      let wrongAnswerFour = Math.ceil(Math.random() * 29) % Math.ceil(Math.random() * 29);
+
+      document.getElementById("button1").innerHTML = wrongAnswerOne;
+      document.getElementById("button2").innerHTML = wrongAnswerTwo;
+      document.getElementById("button3").innerHTML = wrongAnswerThree;
+      document.getElementById("button4").innerHTML = wrongAnswerFour;
+
+      let correctAnsRange = Math.floor(Math.random() * 4) + 1;
+      let correctAnsKey = "button" + correctAnsRange;
+      document.getElementById(correctAnsKey).innerHTML = correctAnswer;
+    }
+
+    function checkAns(btnRange) {
+      let answer = document.getElementById("button" + btnRange).innerHTML;
+      if (answer == correctAnswer) {
+        score += 1;
+      }
+      if (answer != correctAnswer) {
+        score = 0;
+      }
+      document.getElementById("currentScore").innerHTML = "Current Score: " + score + " Points";
+      if (score > highScore) {
+        highScore = score;
+      }
+      localStorage.setItem("highScore", highScore);
+      document.getElementById("highScore").innerHTML = "High Score: " + highScore + " Points";
+      question();
+    }
+  </script>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <title>Speed Modulo</title>
+  <link rel="stylesheet" href="style.css">
+
+  <div class="main-container">
+    <div class="main">
+      <h1>The Speed Modulo Game</h1>
+      <p1>This is an educational arithmetic game. Your goal is to get as many correct responses as possible from these
+        modulo questions. Your goal is to try to keep on beating your high score! The game is all about accuracy. If you
+        get a question wrong then the score is reset to 0 points.
+      </p1>
+      <br></br>
+      <p1>How the modulo operation("mod" or "%" in programming) works is that it is the remainder when dividing. For
+        example, “7 mod 3 = 2” which means 1 is the remainder when you divide 7 by 3.</p1>
+    </div>
+  </div>
+  <div id="currentScore">Current Score: 0 Points</div>
+
+  <div id="highScore">High Score: 0 Points</div>
+  <button id="startButton" onclick="start()">START</button>
+  <div id="displayTime">Time: 60s</div>
+  <br></br>
+  <div class="op" id="operator">? % ?</div>
+  <br></br>
+  <button onclick="checkAns(1)" id="button1">?</button>
+  <button onclick="checkAns(2)" id="button2">?</button>
+  <br></br>
+  <button onclick="checkAns(3)" id="button3">?</button>
+  <button onclick="checkAns(4)" id="button4">?</button>
+</head>
+
+</html>
